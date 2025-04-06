@@ -1,7 +1,7 @@
-Run 1: Cost=6, Time=0.2973 sec, Path=[0, 4, 8, 9, 13, 14, 15]
-Run 2: Cost=6, Time=0.2909 sec, Path=[0, 4, 8, 9, 13, 14, 15]
-Run 3: Cost=inf, Time=0.2959 sec, Path=None
-Run 4: Cost=6, Time=0.2919 sec, Path=[0, 4, 8, 9, 13, 14, 15]
-Run 5: Cost=inf, Time=0.2608 sec, Path=None
+Run 1: Cost=6, Time=0.5738 sec, Path=[0, 1, 2, 6, 10, 14, 15]
+Run 2: Cost=inf, Time=0.5560 sec, Path=None
+Run 3: Cost=inf, Time=0.5706 sec, Path=None
+Run 4: Cost=inf, Time=0.5674 sec, Path=None
+Run 5: Cost=inf, Time=0.5690 sec, Path=None
 
-Average Time over 5 runs: 0.2874 sec
+Average Time over 5 runs: 0.5674 sec

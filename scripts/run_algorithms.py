@@ -1,8 +1,11 @@
 import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import time
 import multiprocessing
+import matplotlib.pyplot as plt
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from algorithms.branch_and_bound import branch_and_bound
 from algorithms.ida_star import ida_star
 from algorithms.hill_climbing import hill_climbing
@@ -11,8 +14,6 @@ from environments.frozen_lake_env import frozen_lake_env
 from environments.ant_maze_env import ant_maze_env
 from environments.tsp_env import generate_tsp_env
 
-# Ensure root path is in sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 RESULTS_DIR = "results"
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
@@ -47,6 +48,7 @@ def run_with_timeout(func, args=(), timeout=TIMEOUT):
 def run_multiple(label, func, env=None, args=()):
     results = []
     total_time = 0.0
+    successful_runs = 0
     for i in range(5):
         print(f"Run {i + 1} for {label}")
         if env:
@@ -63,42 +65,62 @@ def run_multiple(label, func, env=None, args=()):
             path, cost = result
             run_time = end_time - start_time
             total_time += run_time
+            successful_runs += 1
             results.append(f"Run {i + 1}: Cost={cost}, Time={run_time:.4f} sec, Path={path}")
-    avg_time = total_time / 5
-    results.append(f"\nAverage Time over 5 runs: {avg_time:.4f} sec")
-    return "\n".join(results)
+    avg_time = total_time / successful_runs if successful_runs > 0 else float('inf')
+    results.append(f"\nAverage Time over {successful_runs} runs: {avg_time:.4f} sec")
+    return "\n".join(results), avg_time
 
 def run_frozen_lake():
     print("Running Branch and Bound on Frozen Lake")
-    # result = run_multiple("Branch and Bound (Frozen Lake)", branch_and_bound, env=frozen_lake_env)
-    result = run_multiple(
-    "Branch and Bound (Frozen Lake)",
-    branch_and_bound,
-    args=("FrozenLake-v1",) )
+    result, avg_time = run_multiple("Branch and Bound (Frozen Lake)", branch_and_bound, args=("FrozenLake-v1",))
     print(result)
     write_result("bnb.txt", result)
-
+    return "Branch and Bound", avg_time
 
 def run_ant_maze():
     print("Running IDA* on Ant Maze")
-    result = run_multiple("IDA* (Ant Maze)", ida_star, env=ant_maze_env)
+    result, avg_time = run_multiple("IDA* (Ant Maze)", ida_star, env=ant_maze_env)
     print(result)
     write_result("ida_star.txt", result)
+    return "IDA*", avg_time
 
 def run_tsp():
     print("Running TSP with Hill Climbing and Simulated Annealing")
     matrix = generate_tsp_env(5)
 
-    result_hc = run_multiple("Hill Climbing (TSP)", hill_climbing, args=(matrix,))
+    result_hc, avg_time_hc = run_multiple("Hill Climbing (TSP)", hill_climbing, args=(matrix,))
     print(result_hc)
     write_result("hill_climbing.txt", result_hc)
-    result_sa = run_multiple("Simulated Annealing (TSP)", simulated_annealing, args=(matrix,))
+
+    result_sa, avg_time_sa = run_multiple("Simulated Annealing (TSP)", simulated_annealing, args=(matrix,))
     print(result_sa)
     write_result("simulated_annealing.txt", result_sa)
 
+    return [("Hill Climbing", avg_time_hc), ("Simulated Annealing", avg_time_sa)]
+
 if __name__ == "__main__":
-    multiprocessing.set_start_method("spawn", force=True)  # Required for Windows
-    run_frozen_lake()
-    run_ant_maze()
-    run_tsp()
-    print("All algorithms have been run. Check the results in the 'results' directory.")
+    multiprocessing.set_start_method("spawn", force=True)
+
+    algo_times = []
+
+    bnb_label, bnb_time = run_frozen_lake()
+    algo_times.append((bnb_label, bnb_time))
+
+    ida_label, ida_time = run_ant_maze()
+    algo_times.append((ida_label, ida_time))
+
+    tsp_results = run_tsp()
+    algo_times.extend(tsp_results)
+
+    # Plotting
+    labels, times = zip(*algo_times)
+    plt.figure(figsize=(10, 6))
+    plt.bar(labels, times, color='skyblue')
+    plt.xlabel("Algorithm")
+    plt.ylabel("Average Time (s)")
+    plt.title("Average Execution Time of Algorithms")
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig(os.path.join(RESULTS_DIR, "average_times.png"))
+    print("Saved average_times.png in results directory.")

@@ -1,7 +1,7 @@
-Run 1: Cost=224, Time=0.3115 sec, Path=[4, 1, 3, 2, 0]
-Run 2: Cost=224, Time=0.2770 sec, Path=[2, 0, 4, 1, 3]
-Run 3: Cost=224, Time=0.2594 sec, Path=[1, 3, 2, 0, 4]
-Run 4: Cost=224, Time=0.2580 sec, Path=[1, 3, 2, 0, 4]
-Run 5: Cost=235, Time=0.2593 sec, Path=[0, 1, 3, 2, 4]
+Run 1: Cost=250, Time=0.5653 sec, Path=[0, 3, 2, 4, 1]
+Run 2: Cost=224, Time=0.5726 sec, Path=[0, 4, 1, 3, 2]
+Run 3: Cost=224, Time=0.6135 sec, Path=[2, 0, 4, 1, 3]
+Run 4: Cost=224, Time=0.6016 sec, Path=[3, 2, 0, 4, 1]
+Run 5: Cost=224, Time=0.5846 sec, Path=[2, 0, 4, 1, 3]
 
-Average Time over 5 runs: 0.2730 sec
+Average Time over 5 runs: 0.5875 sec
