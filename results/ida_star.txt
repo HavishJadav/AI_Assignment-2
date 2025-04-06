@@ -1,3 +1,7 @@
-IDA* Solution: [341, 441, 421, 321, 221, 121, 21, 1, 17]
-Cost: 8
-Time Taken: 1.9139 sec
+Run 1: Cost=3, Time=1.8319 sec, Path=[202, 102, 2, 18]
+Run 2: Cost=4, Time=1.8173 sec, Path=[221, 121, 21, 1, 17]
+Run 3: Cost=13, Time=2.0059 sec, Path=[249, 349, 449, 429, 329, 229, 129, 29, 9, 109, 209, 309, 409, 417]
+Run 4: Cost=9, Time=2.0345 sec, Path=[326, 426, 446, 346, 246, 146, 46, 66, 86, 98]
+Run 5: Cost=2, Time=1.6035 sec, Path=[493, 473, 477]
+
+Average Time over 5 runs: 1.8586 sec

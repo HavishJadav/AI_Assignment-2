@@ -1,0 +1,6 @@
+numpy
+matplotlib
+imageio
+gymnasium
+tqdm
+moviepy  # optional, for video editing or gif support

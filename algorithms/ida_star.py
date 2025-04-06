@@ -5,19 +5,15 @@ def heuristic(state):
     taxi_row, taxi_col, dest_row, dest_col = decode_state(state)
     return abs(taxi_row - dest_row) + abs(taxi_col - dest_col)
 
-
 # Helper to decode Taxi-v3 state
 def decode_state(state):
     env = gym.make("Taxi-v3")
     return env.unwrapped.decode(state)
 
-def is_goal_state(state):
-    # Taxi-v3 ends when passenger is dropped off
+def is_goal_state(state, goal_states):
     return state in goal_states
 
-def ida_star():
-    global goal_states
-    env = gym.make("Taxi-v3", render_mode="ansi")
+def ida_star(env):
     initial_state, _ = env.reset()
 
     # Get all terminal goal states
@@ -34,12 +30,12 @@ def ida_star():
         if f > bound:
             return f
 
-        if is_goal_state(node):
+        if is_goal_state(node, goal_states):
             return "FOUND"
 
         visited.add(node)
-
         min_threshold = float('inf')
+
         for action in range(env.action_space.n):
             env.unwrapped.s = node
             next_state, _, terminated, _, _ = env.step(action)
