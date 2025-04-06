@@ -78,7 +78,7 @@ This will test if envs are running properly.
 ```bash
 python scripts/run_algorithms.py
 ```
-This will run each algorithm 5 times and save the results,plot to the `results/` folder.
+This will run each algorithm 5 times and save the results and average time plot to the `results/` folder.
 
 ---
 
