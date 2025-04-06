@@ -93,7 +93,7 @@ Each file contains detailed results for 5 runs and the average time taken.
 
 ### Visuals
 
-- `results/average_times_bnb_ida.png` - Bar chart comparing BnB and IDA* average times
+- `results/average_times.png` - Bar chart comparing all algorithms average times to reach the goal state
 - `results/*.gif` - gif files for all algorithms
 ---
 
