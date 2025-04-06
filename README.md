@@ -58,6 +58,7 @@ AI_Assignment-2/
 │   └── run_algorithms.py
 │   └── test_env.py
 ├── AI-Assignment 2.pptx
+├── requirements.txt
 └── README.md
 ```
 
